@@ -37,31 +37,31 @@ app.listen(port, () => {
 function findFriends(website) {
   
   return axios.get(website).then(function (res) {
-    var contentObj = {};
+    var results = {};
     
     const $ = cheerio.load(res.data);
 
     $("head").each(function (i, element) {
-      contentObj.title = $(this).find("title").text().trim();
-      console.log("Title: ", contentObj.title);
+      results.title = $(this).find("title").text().trim();
+      console.log("Title: ", results.title);
     });
 
     $("h3").each(function (i, element) {
-      contentObj.headers=[];
+      results.headers=[];
       var foundHeaders = $(this).text().trim();
       if(foundHeaders.includes("kitten") || foundHeaders.includes("dog") || foundHeaders.includes("puppy")){
-        contentObj.headers.push(foundHeaders);
+        results.headers.push(foundHeaders);
       }
     });
     
-    console.log("Headers: ",contentObj.headers);
+    console.log("Headers: ",results.headers);
     
-    // if ((contentObj.headers.length === 0)){
+    // if ((results.headers.length === 0)){
     //   throw new Error("I don't know how to find friends!");
     // }else{
-    //   return contentObj;
+    //   return results;
     // }
-    return contentObj;
+    return results;
   });
     
 
