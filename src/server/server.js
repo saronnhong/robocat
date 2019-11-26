@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.post("/findfriends", async (req, res, next) => {
   try {
     const friends = await findFriends(website);
     res.send(friends);
-    
+
   } catch (err) {
     console.error("oops", err)
     res.status(500).send({
@@ -34,5 +35,41 @@ app.listen(port, () => {
 
 /** TODO return promise of friends json. */
 function findFriends(website) {
-  throw new Error("I don't know how to find friends!")
+  
+  return axios.get(website).then(function (res) {
+    var contentObj = {};
+    
+    const $ = cheerio.load(res.data);
+
+    $("head").each(function (i, element) {
+      contentObj.title = $(this).find("title").text().trim();
+      console.log("Title: ", contentObj.title);
+    });
+
+    $("h3").each(function (i, element) {
+      contentObj.headers=[];
+      var foundHeaders = $(this).text().trim();
+      if(foundHeaders.includes("kitten") || foundHeaders.includes("dog") || foundHeaders.includes("puppy")){
+        contentObj.headers.push(foundHeaders);
+      }
+    });
+    
+    console.log("Headers: ",contentObj.headers);
+    
+    // if ((contentObj.headers.length === 0)){
+    //   throw new Error("I don't know how to find friends!");
+    // }else{
+    //   return contentObj;
+    // }
+    return contentObj;
+  });
+    
+
+  
+  
+  
+
+  
+  
+
 }
