@@ -8,11 +8,18 @@ export default class App extends React.Component {
   state = {
     loading: false,
     results: undefined,
-    err: undefined
+    err: undefined,
+    prevSearch: "",
+    prevSearchTime: 0
   };
 
   fetchResults = async website => {
     try {
+      if ((this.state.prevSearch === website) && (Date.now() - this.state.prevSearchTime) < 15000) {
+        alert("Warning: Scraping too quickly on the same website might cause problems. Please wait 15 seconds before trying again.");
+      } else {
+        this.setState({ prevSearch: website, prevSearchTime: Date.now() });
+      }
       this.setState({ loading: true, results: undefined, err: undefined });
       const results = await getWebsiteResults(website);
       this.setState({ results: results });

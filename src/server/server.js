@@ -43,11 +43,11 @@ function findFriends(website) {
     // $("head").each(function (i, element) {
     //   results.title = $(this).find("title").text().trim();
     // });
-    
+
     results.title = $("head").find("title").text().trim();
 
     $(":header").each(function (i, element) {
-      var foundHeaders = $(this).text().trim().toLowerCase();
+      var foundHeaders = $(this).text().toLowerCase().trim();
       if (foundHeaders.includes("cat") || foundHeaders.includes("kitten") || foundHeaders.includes("dog") || foundHeaders.includes("puppy")) {
         foundHeaders = foundHeaders[0].toUpperCase() + foundHeaders.slice(1);     //Capitalizes first letter in Sentence
         results.headers.push(foundHeaders);
