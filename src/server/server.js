@@ -40,9 +40,11 @@ function findFriends(website) {
     results.headers = [];
     const $ = cheerio.load(res.data);
 
-    $("head").each(function (i, element) {
-      results.title = $(this).find("title").text().trim();
-    });
+    // $("head").each(function (i, element) {
+    //   results.title = $(this).find("title").text().trim();
+    // });
+    
+    results.title = $("head").find("title").text().trim();
 
     $(":header").each(function (i, element) {
       var foundHeaders = $(this).text().trim().toLowerCase();
