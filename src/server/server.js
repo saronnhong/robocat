@@ -40,25 +40,17 @@ function findFriends(website) {
     results.headers = [];
     const $ = cheerio.load(res.data);
 
-    // $("head").each(function (i, element) {
-    //   results.title = $(this).find("title").text().trim();
-    // });
-
     results.title = $("head").find("title").text().trim();
 
     $(":header").each(function (i, element) {
       var foundHeaders = $(this).text().toLowerCase().trim();
       if (foundHeaders.includes("cat") || foundHeaders.includes("kitten") || foundHeaders.includes("dog") || foundHeaders.includes("puppy")) {
-        foundHeaders = foundHeaders[0].toUpperCase() + foundHeaders.slice(1);     //Capitalizes first letter in Sentence
+        foundHeaders = foundHeaders[0].toUpperCase() + foundHeaders.slice(1);     
         results.headers.push(foundHeaders);
       };
     });
 
-    if ((results.headers.length === 0) && (results.title === "")) {
-      throw new Error("I don't know how to find friends!");
-    } else {
-      return results;
-    };
+    return results;
   });
 
 
