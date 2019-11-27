@@ -45,20 +45,12 @@ function findFriends(website) {
     $(":header").each(function (i, element) {
       var foundHeaders = $(this).text().toLowerCase().trim();
       if (foundHeaders.includes("cat") || foundHeaders.includes("kitten") || foundHeaders.includes("dog") || foundHeaders.includes("puppy")) {
-        foundHeaders = foundHeaders[0].toUpperCase() + foundHeaders.slice(1);     
+        foundHeaders = foundHeaders[0].toUpperCase() + foundHeaders.slice(1);
         results.headers.push(foundHeaders);
       };
     });
-
     return results;
-  });
-
-
-
-
-
-
-
-
-
+  }).catch(err => {
+      throw new Error("I don't know how to find friends!");
+    });
 }
