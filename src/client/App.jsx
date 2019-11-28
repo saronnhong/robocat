@@ -15,6 +15,7 @@ export default class App extends React.Component {
 
   fetchResults = async website => {
     try {
+      //Alert if scraping the same website too quickly (10 seconds)
       if ((this.state.prevSearch === website) && (Date.now() - this.state.prevSearchTime) < 10000) {
         alert("WARNING: Scraping too quickly on the same website might cause problems. Please wait 10 seconds before trying again.");
       } else {
